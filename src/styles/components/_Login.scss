@@ -1,0 +1,45 @@
+@import '../mixins';
+
+.main {
+    @include flex;
+    width: 100%;
+    flex-direction: column;
+    height: 100vh;
+    background: rgb(43, 136, 197);
+    }
+
+.logo {
+    @include flex;
+    width: 100%;
+    height: 500px;
+    background-color: transparent;
+    flex-direction:  column;
+
+    img {
+        width: 40vw;
+    }
+
+    h2 {
+        font-size: 80px;
+        color: red;
+        background: -webkit-linear-gradient(black, red);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+}
+
+.login-button {
+    margin-top: 10px;
+    width: 350px;
+    height: 35px;
+
+}
+
+.login-input {
+    input {
+        margin-left: 10px;
+        margin-right: 10px;
+        height: 25px;
+        width: 165px;
+    }
+}
