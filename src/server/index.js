@@ -23,7 +23,7 @@ massive(process.env.CONNECTION_STRING).then( db =>{
 })
 
 
-// Auth0 setup
+// Auth0 
 
 passport.use(new Auth0Strategy({
     domain: process.env.AUTH_DOMAIN,
