@@ -9,6 +9,7 @@ const express = require('express'),
 
 
 const app = express();
+app.use(cors())
 app.use(bodyParser.json());
 app.use(session({
     secret: process.env.SECRET,
@@ -34,7 +35,11 @@ passport.use(new Auth0Strategy({
     const userData = profile._json;
     const db = app.get('db');
     db.check_user([userData.email]).then( user => {
-        return done(null, user[0].email)
+        if (user[0]){
+            return done(null, user[0].email)
+        } else {
+            return done(null, null)
+        }
     }) 
 }))
 passport.serializeUser(function(email, done){
@@ -52,9 +57,19 @@ passport.deserializeUser(function(email, done){
 app.get('/auth', passport.authenticate('auth0'));
 app.get('/auth/callback', passport.authenticate('auth0', {
     successRedirect: 'http://localhost:3000/#/dashboard',
-    failureRedirect: '/auth'
+    failureRedirect: 'http://localhost:3000/#/'
 }))
 
+// Search Endpoints
+
+app.get('/search/:item_name', (req,res) => {
+    const db = res.app.get('db')
+    const {params} = req
+    const item = `%${params.item_name}%`
+    db.search_item([item]).then(item => {
+        res.status(200).send(item)
+    })
+})
 
 
 const PORT = 3535;
