@@ -57,7 +57,7 @@ passport.deserializeUser(function(email, done){
 app.get('/auth', passport.authenticate('auth0'));
 app.get('/auth/callback', passport.authenticate('auth0', {
     successRedirect: 'http://localhost:3000/#/dashboard',
-    failureRedirect: 'http://localhost:3000/#/'
+    failureRedirect: 'http://localhost:3000/#/login?access=unauthorized'
 }))
 
 // Search Endpoints
@@ -69,6 +69,33 @@ app.get('/search/:item_name', (req,res) => {
     db.search_item([item]).then(item => {
         res.status(200).send(item)
     })
+})
+
+// Create Endpoints
+
+app.post('/create', (req,res) => {
+    const db = res.app.get('db');
+    const {itemName, upc, cost, retail, quantity, vendor} = req.body;
+    db.create_item([itemName, upc, cost, retail, quantity, vendor])
+    .then( () => res.status(200).send());
+});
+
+// Update Endpoints
+
+app.get('/update/:ID', (req,res) => {
+    const db = res.app.get('db');
+    const {params} = req;
+    const item = `${params.ID}`;
+    db.search_update([item]).then(item => {
+        res.status(200).send(item);
+    });
+});
+
+app.put('/update/item', (req, res) => {
+    const db = res.app.get('db');
+    const {ID, itemName, upc, cost, retail, quantity, vendor} = req.body;
+    db.update_item([ID, itemName, upc, cost, retail, quantity, vendor])
+    .then( () => res.status(200).send() )
 })
 
 
