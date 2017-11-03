@@ -1,0 +1,46 @@
+@import '../mixins';
+
+.search-results {
+    width: 100%;
+    @include flex;
+    flex-flow: wrap;
+    height: calc(100vh - 160px );
+    background: lightcyan;
+    align-content: space-between;
+    padding-top: 180px;
+}
+
+.search-input {
+    width: 400px;
+    height: 35px;
+    margin: 0 10px;
+}
+
+#filter-type {
+    width: 70px;
+    height: 35px;
+    margin-left: 10px;
+}
+
+.result-box {
+    width: 80%;
+    height: 200px;
+    background: steelblue;
+    margin-top: 70px;
+    font-size: 30px;
+    padding: 40px 90px;
+    @include flex;
+    align-items: flex-start;
+    justify-content: space-around;
+    flex-flow: wrap;
+
+    div {
+        @include flex;
+        flex-direction: row;
+    }
+
+    .result-boxes {
+        margin-left: 9px;
+        margin-right: 18px;
+    }
+}

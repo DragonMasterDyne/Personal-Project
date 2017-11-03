@@ -14,11 +14,11 @@ class App extends Component {
       <HashRouter>
         <div>
           <div>
-              <Route path='/' exact component={Login} />
+              <Route path='/login' component={Login} />
               <Route path='/dashboard' component={Dash} />
               <Route path='/users' component={Users} />
               <Route path='/create' component={Create} />
-              <Route path='/update' component={Update} />
+              <Route path='/update/:ID' component={Update} />
           </div>
         </div>
       </HashRouter>

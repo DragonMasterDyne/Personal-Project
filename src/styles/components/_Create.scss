@@ -1,0 +1,90 @@
+@import '../mixins';
+
+
+
+.top-level {
+    @include flex;
+    align-items: flex-start;
+    flex-direction: row;
+    flex-flow: wrap;
+    padding-top: 80px;
+    background: gray;
+    height: calc(100vh - 160px);
+}
+
+.title-text {
+    font-size: 50px;
+    margin-left: 80px;
+}
+
+.create-box {
+    @include flex;
+    width: 75%;
+}
+
+.create-inputs {
+    width: 70%;
+    display: grid;
+    grid-template-columns: 25% 25% 25% 25%;
+    grid-template-rows: 25% 25% 25% 25%;
+    font-size: 20px;
+    grid-gap: 25px;
+}
+
+.text-one {
+    grid-column: 1 / 2 ;
+    grid-row: 1 / 2;
+}
+
+.text-two {
+    grid-column: 3 / 4;
+    grid-row: 1 / 2;
+}
+.text-three {
+    grid-column: 1 / 2;
+    grid-row: 2 / 3;
+}
+.text-four {
+    grid-column: 3 / 4;
+    grid-row: 2 / 3;
+}
+.text-five {
+    grid-column: 1 / 2;
+    grid-row: 3 / 4;
+}
+.text-six {
+    grid-column: 3 / 4;
+    grid-row: 3 / 4;
+}
+
+.text-input {
+    grid-column: 2 / 3 ;
+    grid-row: 1 / 2;
+}
+.text-input-one {
+    grid-column: 4 / 5;
+    grid-row: 1 / 2;
+}
+.text-input-two {
+    grid-column: 2 / 3;
+    grid-row: 2 / 3;
+}
+.text-input-three {
+    grid-column: 4 / 5;
+    grid-row: 2 / 3;
+}
+.text-input-four {
+    grid-column: 2 / 3;
+    grid-row: 3 / 4;
+}
+.text-input-five {
+    grid-column: 4 / 5;
+    grid-row: 3 / 4;
+}
+
+.create-button {
+    height: 40px;
+    width: 350px;
+    background: blue;
+    grid-column: 2;
+}

@@ -60,7 +60,7 @@ app.get('/auth/callback', passport.authenticate('auth0', {
     failureRedirect: 'http://localhost:3000/#/login?access=unauthorized'
 }))
 
-// Search Endpoints
+// Search Endpoint
 
 app.get('/search/:item_name', (req,res) => {
     const db = res.app.get('db')
@@ -98,6 +98,14 @@ app.put('/update/item', (req, res) => {
     .then( () => res.status(200).send() )
 })
 
+// Delete Endpoint
+
+app.delete('/delete/item/:ID', (req, res) => {
+    const db = res.app.get('db');
+    const {params} = req;
+    db.delete_item([params.ID])
+    .then( () => res.status(200).send())
+})
 
 const PORT = 3535;
 app.listen(PORT, () => console.log(`Listing on port: ${PORT}`));
