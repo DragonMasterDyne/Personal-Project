@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import {Link, Switch} from 'react-router-dom'
-import HLogo from '../assets/H-icon.png'
 
 
 export default class Header extends Component {
@@ -8,7 +7,7 @@ export default class Header extends Component {
     return (
       <div>
         <div className='main-header' >
-          <img className='img-header' src={HLogo} alt=""/>
+          <img className='img-header' src='http://www.clker.com/cliparts/P/e/Z/Q/a/m/white-letter-h-md.png' alt=""/>
           <a href="http://localhost:3000/#/login"><button className='logout-button' >LOGOUT</button></a>
         </div>
       <Switch>

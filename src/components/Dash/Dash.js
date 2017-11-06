@@ -2,59 +2,47 @@ import React, { Component } from 'react'
 import Header from '../Header/Header'
 import axios from 'axios'
 import {Link} from 'react-router-dom'
+import {connect} from 'react-redux'
+import { searchItem } from '../../ducks/reducer'
 
 
-export default class Dash extends Component {
-  constructor(){
-    super();
+ class Dash extends Component {
+  constructor(props){
+    super(props);
 
-    this.state = {
-        ID: 0,
-        itemName: '',
-        upc: 0,
-        cost: 0,
-        retail: 0,
-        quantity: 0,
-        vendor: ''
-    }
+    // this.state = {
+    //     ID: 0,
+    //     itemName: '',
+    //     upc: 0,
+    //     cost: 0,
+    //     retail: 0,
+    //     quantity: 0,
+    //     vendor: ''
+    // }
 
-    this.handleKeyPres = this.handleKeyPres.bind(this)
+    this.handleKeyPress = this.handleKeyPress.bind(this)
     this.handleClickRemove = this.handleClickRemove.bind(this)
   }
 
   handleClickRemove(){
     const answer = window.confirm('Are you sure you want to remove this item?')
     if(answer){
-      axios.delete(`http://localhost:3535/delete/item/${this.state.ID}`)
+      axios.delete(`http://localhost:3535/delete/item/${this.props.ID}`)
     } else {
       return null
     }
   }
 
 
-  handleKeyPres(e){
+  handleKeyPress(e){
     if (e.key === 'Enter') {
-      axios.get(`http://localhost:3535/search/${e.target.value}`)
-      .then((res) => {
-        console.log('response', res)
-        
-        this.setState({
-          ID: res.data[0].ID,
-          itemName: res.data[0].item_name,
-          upc: res.data[0].product_code,
-          cost: res.data[0].cost,
-          retail: res.data[0].retail,
-          quantity: res.data[0].quantity,
-          vendor: res.data[0].vendor
-        })
-      })
-      .then( ()=> console.log(this.state))
+      this.props.searchItem(e)
     }
   }
   
   
 
-  render() {
+  render(props) {
     
 
     return (
@@ -65,7 +53,7 @@ export default class Dash extends Component {
 
         <div className='search-results' >
             <p>Search Inventory</p>
-            <input onKeyPress={this.handleKeyPres} className='search-input' type="text"/> 
+            <input onKeyPress={this.handleKeyPress} className='search-input' type="text"/> 
             {/* Need to find good way to display it and finish back end
               /* <p>Filter By Category</p>
             <select name="Filter" id="filter-type">
@@ -75,24 +63,27 @@ export default class Dash extends Component {
               <option value="Dairy">Dairy</option>
               <option value="Frozen">Frozen</option>
             </select>   */}
-            { this.state.itemName === '' ? (<div></div>) :(
-           <div className='result-box'>
-              <div>Name:<span className='result-boxes'> {this.state.itemName} </span></div>
+            { this.props.itemName === '' ? (<div></div>) :(
+           <div className='create-box'>
+          <div className='create-inputs'>
+            <p className='text-one'>Name:</p>
+            <input  value={this.props.itemName} className='text-input' type="text"/>
+            <p className='text-two'>UPC:</p>
+            <input value={this.props.upc} className='text-input-one' type="text"/>
+            <p className='text-three'>Cost:</p>
+            <input  value={this.props.cost} className='text-input-two' type="text"/>
+            <p className='text-four'>Retail:</p>
+            <input value={this.props.retail} className='text-input-three' type="text"/>
+            <p className='text-five'>Quantity:</p>
+            <input value={this.props.quantity} className='text-input-four' type="text"/>
+            <p className='text-six'>Vendor:</p>
+            <input value={this.props.vendor} className='text-input-five' type="text"/>
 
-              <div>Cost:<span className='result-boxes'> {this.state.cost} </span></div>
-
-              <div>UPC:<span className='result-boxes'> {this.state.upc} </span></div>
-
-              <div>Price:<span className='result-boxes'> {this.state.retail} </span></div>
-
-              <div>Vendor:<span className='result-boxes'> {this.state.vendor} </span></div>
-
-              <div>Quantity:<span className='result-boxes'> {this.state.quantity} </span></div>
-
-              <Link to={`/update/${this.state.ID}`} >
+              <Link to={`/update/${this.props.ID}`} >
                 <button className='create-button' >Update Item</button>
               </Link>
-                <button onClick={this.handleClickRemove} className='create-button' >Delete Item</button>
+                <button onClick={this.handleClickRemove} className='remove-button' >Delete Item</button>
+          </div>
           </div>
             )}
         </div>
@@ -100,3 +91,18 @@ export default class Dash extends Component {
     )
   }
 }
+
+function mapStateToProps(state) {
+  return{
+    ID: state.ID,
+    itemName: state.item_name,
+    upc: state.product_code,
+    cost: state.cost,
+    retail: state.retail,
+    quantity: state.quantity,
+    vendor: state.vendor
+  }
+}
+
+
+export default connect(mapStateToProps, { searchItem })(Dash)

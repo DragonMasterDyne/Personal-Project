@@ -5,7 +5,7 @@
     width: 100%;
     flex-direction: column;
     height: 100vh;
-    background: rgb(43, 136, 197);
+    background: #aba3a3;
     }
 
 .logo {
@@ -21,10 +21,7 @@
 
     h2 {
         font-size: 80px;
-        color: red;
-        background: -webkit-linear-gradient(black, red);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
+        color: black;
     }
 }
 

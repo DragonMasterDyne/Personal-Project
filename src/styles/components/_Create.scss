@@ -1,14 +1,22 @@
 @import '../mixins';
 
 
-
+.update-top-level {
+    @include flex;
+    align-items: flex-start;
+    flex-direction: row;
+    flex-flow: wrap;
+    padding-top: 80px;
+    background: #8a82ea;
+    height: calc(100vh - 160px);
+}
 .top-level {
     @include flex;
     align-items: flex-start;
     flex-direction: row;
     flex-flow: wrap;
     padding-top: 80px;
-    background: gray;
+    background: #86af77;
     height: calc(100vh - 160px);
 }
 
@@ -18,17 +26,24 @@
 }
 
 .create-box {
-    @include flex;
+    display: flex;
+    justify-content: center;
+    padding-top: 20px;
+    padding-right: 60px;
+    border-top-style: dashed;
+    border-top: solid 1px;
+    align-items: center;
     width: 75%;
 }
 
 .create-inputs {
-    width: 70%;
+    width: 90%;
     display: grid;
     grid-template-columns: 25% 25% 25% 25%;
     grid-template-rows: 25% 25% 25% 25%;
     font-size: 20px;
     grid-gap: 25px;
+    margin-bottom: 40px;
 }
 
 .text-one {
@@ -85,6 +100,17 @@
 .create-button {
     height: 40px;
     width: 350px;
-    background: blue;
+    background: black;
+    color: white;
     grid-column: 2;
+    font-size: 15px;
+}
+
+.remove-button {
+    height: 40px;
+    width: 350px;
+    background: black;
+    color: white;
+    grid-column: 3;
+    font-size: 15px;    
 }

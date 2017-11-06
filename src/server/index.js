@@ -63,11 +63,18 @@ app.get('/auth/callback', passport.authenticate('auth0', {
 // Search Endpoint
 
 app.get('/search/:item_name', (req,res) => {
-    const db = res.app.get('db')
-    const {params} = req
-    const item = `%${params.item_name}%`
+    const db = res.app.get('db');
+    const {params} = req;
+    const item = `%${params.item_name}%`;
     db.search_item([item]).then(item => {
-        res.status(200).send(item)
+        res.status(200).send(item);
+    })
+})
+
+app.get('/users', (req, res) => {
+    const db = app.get('db');
+    db.get_users().then(users => {
+        res.status(200).send(users);
     })
 })
 

@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import HLogo from '../assets/H-icon.png'
 
 export default class Login extends Component {
   render() {
@@ -14,7 +13,7 @@ export default class Login extends Component {
     return (
       <div className='main'>
         <div className='logo' >
-            <img src={HLogo} alt=""/>
+            <img src='http://www.clker.com/cliparts/P/e/Z/Q/a/m/white-letter-h-md.png' alt=""/>
             <h2>INVENTORY</h2>
         </div>
         <div>

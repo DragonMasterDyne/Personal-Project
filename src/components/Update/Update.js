@@ -94,7 +94,7 @@ export default class Update extends Component {
       
       <div className='create-main' >
        <Header/>
-       <div className='top-level'>
+       <div className='update-top-level'>
         <h5 className='title-text' >Update Item</h5>
       <div className='create-box'>
           <div className='create-inputs'>
