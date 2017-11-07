@@ -7,7 +7,40 @@ const initialState = {
     retail: 0,
     quantity: 0,
     vendor: '',
-    users: []
+    users: [],
+    userName: '',
+    userEmail: ''
+}
+
+// Ceate Users
+
+const CREATE_USER = 'CREATE_USER'
+
+export function handleClickCreateUser(user){
+   const createNewUser = axios.post('http://localhost:3535/create/user', user)
+    return {
+        type: CREATE_USER,
+        payload: createNewUser
+    }
+  }
+
+const USER_NAME = 'USER_NAME'
+
+export function handleChangeUserName(e) {
+    return {
+        type: USER_NAME,
+        payload: e
+    }
+}
+
+const USER_EMAIL = 'USER_EMAIL'
+
+export function handleChangeUserEmail(e) {
+    const newEmail = {'email': e}
+    return {
+        type: USER_EMAIL,
+        payload: newEmail
+    }
 }
 
 // Search users
@@ -15,12 +48,11 @@ const initialState = {
 const GET_USERS = 'GET_USERS'
 
 export function getUsers() {
-    const users = axios.get('http://localhost:3535/users')
+    const allUsers = axios.get('http://localhost:3535/users')
     .then((res) => res.data)
-    .then(()=> console.log(initialState.users))
     return {
         type: GET_USERS,
-        payload: users
+        payload: allUsers
     }
 }
 
@@ -46,7 +78,17 @@ export default function reducer(state=initialState, action) {
         let {ID, item_name, product_code, cost, retail, quantity, vendor} = action.payload
         return Object.assign({}, state, {ID, item_name, product_code, cost, retail, quantity, vendor})
         case GET_USERS + '_FULFILLED':
-        return Object.assign({}, state, {users: [action.payload]})
+        let user = action.payload
+        return Object.assign({}, state, {users: user})
+        case CREATE_USER + '_FULFILLED':
+        let newUsers = action.payload
+        return Object.assign({}, state, {users: newUsers})
+        case USER_NAME + '_FUlFILLED':
+        let name = action.payload;
+        return Object.assign({}, state, {userName: name})
+        case USER_EMAIL + '_FUlFILLED':
+        let {email} = action.payload;
+        return Object.assign({}, state, {userEmail: email})
         default: 
             return state
     }

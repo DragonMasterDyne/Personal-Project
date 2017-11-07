@@ -80,12 +80,19 @@ app.get('/users', (req, res) => {
 
 // Create Endpoints
 
-app.post('/create', (req,res) => {
+app.post('/create/item', (req,res) => {
     const db = res.app.get('db');
     const {itemName, upc, cost, retail, quantity, vendor} = req.body;
     db.create_item([itemName, upc, cost, retail, quantity, vendor])
     .then( () => res.status(200).send());
 });
+
+app.post('/create/user', (req,res) => {
+    const db = res.app.get('db');
+    const {name, email} = req.body
+    db.create_user([name, email])
+    .then( () => res.status(200).send()) 
+})
 
 // Update Endpoints
 
