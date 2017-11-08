@@ -5,7 +5,8 @@ const express = require('express'),
       passport = require('passport'),
       Auth0Strategy = require('passport-auth0')
       massive = require('massive'),
-      cors = require('cors');
+      cors = require('cors'),
+      axios = require('axios');
 
 
 const app = express();
@@ -71,6 +72,15 @@ app.get('/search/:item_name', (req,res) => {
     })
 })
 
+app.get('/search/api/:item_name', (req,res) => {
+    const db = res.app.get('db');
+    const {params} = req;
+    axios.get(`http://api.walmartlabs.com/v1/search?query=${params.item_name}&format=json&apiKey=a65y3j4vbdxjzswbscxaggeb`)
+    .then(item => {
+        res.status(200).send(item.data);
+    })
+})
+
 app.get('/users', (req, res) => {
     const db = app.get('db');
     db.get_users().then(users => {
@@ -94,6 +104,13 @@ app.post('/create/user', (req,res) => {
     .then( () => res.status(200).send()) 
 })
 
+app.post('/create/item/api', (req,res) => {
+    const db = res.app.get('db');
+    const {itemName, upc, cost, retail, quantity, vendor} = req.body
+    db.create_item([itemName, upc, cost, retail, quantity, vendor])
+    .then( () => res.status(200).send())
+})
+
 // Update Endpoints
 
 app.get('/update/:ID', (req,res) => {
@@ -112,12 +129,19 @@ app.put('/update/item', (req, res) => {
     .then( () => res.status(200).send() )
 })
 
-// Delete Endpoint
+// Delete Endpoints
 
 app.delete('/delete/item/:ID', (req, res) => {
     const db = res.app.get('db');
     const {params} = req;
     db.delete_item([params.ID])
+    .then( () => res.status(200).send())
+})
+
+app.delete('/delete/user/:email', (req, res) => {
+    const db = res.app.get('db');
+    const {params} = req;
+    db.delete_user([params.email])
     .then( () => res.status(200).send())
 })
 

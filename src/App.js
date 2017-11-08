@@ -5,6 +5,7 @@ import Dash from './components/Dash/Dash'
 import Users from './components/Users/Users'
 import Create from './components/Create/Create'
 import Update from './components/Update/Update'
+import Api from './components/Api/Api'
 import './styles/main.scss'
 
 
@@ -19,6 +20,7 @@ class App extends Component {
               <Route path='/users' component={Users} />
               <Route path='/create' component={Create} />
               <Route path='/update/:ID' component={Update} />
+              <Route path='/api' component={Api} />
           </div>
         </div>
       </HashRouter>

@@ -3,6 +3,7 @@
 .search-results {
     width: 100%;
     @include flex;
+    flex-direction: column;
     flex-flow: wrap;
     height: calc(100vh - 160px );
     background: #78d0d0;

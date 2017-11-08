@@ -15,6 +15,7 @@ export default class Header extends Component {
                 <Link className='links' to='/dashboard'>Dashboard </Link>
                 <Link className='links' to='/users'>Users </Link>
                 <Link className='links' to='/create'>Create New Item </Link>
+                <Link className='links' to='/api'>Search Api </Link>
             </div> 
      </Switch>
       </div>

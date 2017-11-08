@@ -3,24 +3,15 @@ import Header from '../Header/Header'
 import axios from 'axios'
 import {Link} from 'react-router-dom'
 import {connect} from 'react-redux'
-import { searchItem } from '../../ducks/reducer'
+import { searchItem, searchApi } from '../../ducks/reducer'
 
 
  class Dash extends Component {
   constructor(props){
     super(props);
 
-    // this.state = {
-    //     ID: 0,
-    //     itemName: '',
-    //     upc: 0,
-    //     cost: 0,
-    //     retail: 0,
-    //     quantity: 0,
-    //     vendor: ''
-    // }
-
     this.handleKeyPress = this.handleKeyPress.bind(this)
+    this.handleKeyPressApi = this.handleKeyPressApi.bind(this)
     this.handleClickRemove = this.handleClickRemove.bind(this)
   }
 
@@ -40,9 +31,15 @@ import { searchItem } from '../../ducks/reducer'
     }
   }
   
+  handleKeyPressApi(e){
+    if (e.key === 'Enter') {
+      this.props.searchApi(e)
+    }
+  }
+  
   
 
-  render(props) {
+  render() {
     
 
     return (
@@ -79,10 +76,10 @@ import { searchItem } from '../../ducks/reducer'
             <p className='text-six'>Vendor:</p>
             <input value={this.props.vendor} className='text-input-five' type="text"/>
 
-              <Link to={`/update/${this.props.ID}`} >
-                <button className='create-button' >Update Item</button>
+              <Link to={`/update/${this.props.ID}`}  >
+                <button className='create-button'>Update Item</button>
               </Link>
-                <button onClick={this.handleClickRemove} className='remove-button' >Delete Item</button>
+                <button onClick={this.handleClickRemove} className='remove-button'>Delete Item</button>
           </div>
           </div>
             )}
@@ -95,7 +92,7 @@ import { searchItem } from '../../ducks/reducer'
 function mapStateToProps(state) {
   return{
     ID: state.ID,
-    itemName: state.item_name,
+    itemName: state.itemName,
     upc: state.product_code,
     cost: state.cost,
     retail: state.retail,
@@ -105,4 +102,4 @@ function mapStateToProps(state) {
 }
 
 
-export default connect(mapStateToProps, { searchItem })(Dash)
+export default connect(mapStateToProps, { searchItem, searchApi })(Dash)

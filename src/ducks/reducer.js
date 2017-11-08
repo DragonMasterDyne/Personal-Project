@@ -17,31 +17,13 @@ const initialState = {
 const CREATE_USER = 'CREATE_USER'
 
 export function handleClickCreateUser(user){
+    console.log(user)
    const createNewUser = axios.post('http://localhost:3535/create/user', user)
     return {
         type: CREATE_USER,
         payload: createNewUser
     }
   }
-
-const USER_NAME = 'USER_NAME'
-
-export function handleChangeUserName(e) {
-    return {
-        type: USER_NAME,
-        payload: e
-    }
-}
-
-const USER_EMAIL = 'USER_EMAIL'
-
-export function handleChangeUserEmail(e) {
-    const newEmail = {'email': e}
-    return {
-        type: USER_EMAIL,
-        payload: newEmail
-    }
-}
 
 // Search users
 
@@ -69,26 +51,48 @@ export function searchItem(e){
         payload: item
     }
   }
+const SEARCH_API = 'SEARCH_API'
+
+export function searchApi(e){
+     const item = axios.get(`http://localhost:3535/search/api/${e.target.value}`)
+      .then((res) =>  res.data.items[0] )
+    return {
+        type: SEARCH_API,
+        payload: item
+    }
+  }
+
+  // Create items
+
+  const CREATE_ITEM_API = 'CREATE_ITEM_API'
+
+  export function addApi(item) {
+      const createItem = axios.post('http://localhost:3535/create/item/api', item)
+      return {
+          type: CREATE_ITEM_API,
+          payload: createItem
+      }
+  }
 
 
 
 export default function reducer(state=initialState, action) {
     switch(action.type) {
         case SEARCH_ITEM + '_FULFILLED':
-        let {ID, item_name, product_code, cost, retail, quantity, vendor} = action.payload
-        return Object.assign({}, state, {ID, item_name, product_code, cost, retail, quantity, vendor})
+            let {ID, item_name, product_code, cost, retail, quantity, vendor} = action.payload
+                return Object.assign({}, state, {ID, itemName: item_name, product_code, cost, retail, quantity, vendor})
+        case SEARCH_API + '_FULFILLED':
+            let {name, upc, salePrice} = action.payload
+                return Object.assign({}, state, {itemName: name, product_code: upc, retail: salePrice})
         case GET_USERS + '_FULFILLED':
-        let user = action.payload
-        return Object.assign({}, state, {users: user})
+            let user = action.payload
+                return Object.assign({}, state, {users: user})
         case CREATE_USER + '_FULFILLED':
-        let newUsers = action.payload
-        return Object.assign({}, state, {users: newUsers})
-        case USER_NAME + '_FUlFILLED':
-        let name = action.payload;
-        return Object.assign({}, state, {userName: name})
-        case USER_EMAIL + '_FUlFILLED':
-        let {email} = action.payload;
-        return Object.assign({}, state, {userEmail: email})
+            let newUsers = action.payload
+                return Object.assign({}, state, {users: newUsers})
+        case CREATE_ITEM_API + '_FULFILLED':
+            let api = action.payload
+                return Object.assign({}, state, {api})
         default: 
             return state
     }

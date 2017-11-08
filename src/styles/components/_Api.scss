@@ -1,0 +1,25 @@
+.link-button {
+    grid-column: 2/3;
+    grid-row: 4/5;
+}
+
+.api-button {
+    height: 40px;
+    width: 350px;
+    background: black;
+    color: white;
+    
+    font-size: 15px;
+}
+
+.api-search-results {
+    width: 100%;
+    @include flex;
+    flex-direction: column;
+    flex-flow: wrap;
+    height: calc(100vh - 160px );
+    background: #a8c467;
+    align-content: space-between;
+    padding-top: 180px;
+    font-size: 18px;
+}

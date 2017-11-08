@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import Header from '../Header/Header'
 import axios from 'axios'
+import {Link} from 'react-router-dom'
 
 export default class Update extends Component {
   constructor(){
@@ -110,7 +111,9 @@ export default class Update extends Component {
             <input onChange={this.handleQuantity} className='text-input-four' type="text" value={this.state.quantity}/>
             <p className='text-six'>Vendor:</p>
             <input onChange={this.handleVendor} className='text-input-five' type="text" value={this.state.vendor}/>
-            <button onClick={this.handleClick} className='create-button' >Update Item</button>
+            <Link to='/dashboard' >
+              <button onClick={this.handleClick} className='create-button' >Update Item</button>
+            </Link>
           </div>
         </div>
         </div>
