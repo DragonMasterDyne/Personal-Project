@@ -18,7 +18,7 @@ import Snackbar from 'material-ui/Snackbar';
   handleClickRemove(){
     const answer = window.confirm('Are you sure you want to remove this item?')
     if(answer){
-      axios.delete(`http://localhost:3535/delete/item/${this.props.ID}`)
+      axios.delete(`/delete/item/${this.props.ID}`)
     } else {
       return null
     }

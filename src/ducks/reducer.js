@@ -23,7 +23,7 @@ const CREATE_USER = 'CREATE_USER'
 
 export function handleClickCreateUser(user){
     console.log(user)
-   const createNewUser = axios.post('http://localhost:3535/create/user', user)
+   const createNewUser = axios.post('/create/user', user)
     return {
         type: CREATE_USER,
         payload: createNewUser
@@ -35,7 +35,7 @@ export function handleClickCreateUser(user){
 const GET_USERS = 'GET_USERS'
 
 export function getUsers() {
-    const allUsers = axios.get('http://localhost:3535/users')
+    const allUsers = axios.get('/users')
     .then((res) => res.data)
     return {
         type: GET_USERS,
@@ -49,7 +49,7 @@ export function getUsers() {
 const SEARCH_ITEM = 'SEARCH_ITEM'
 
 export function searchItem(e){
-     const item = axios.get(`http://localhost:3535/search/${e.target.value}`)
+     const item = axios.get(`/search/${e.target.value}`)
       .then((res) =>  res.data[0])
     return {
         type: SEARCH_ITEM,
@@ -59,7 +59,7 @@ export function searchItem(e){
 const SEARCH_API = 'SEARCH_API'
 
 export function searchApi(e){
-     const item = axios.get(`http://localhost:3535/search/api/${e.target.value}`)
+     const item = axios.get(`/search/api/${e.target.value}`)
       .then((res) =>  res.data.items )
     return {
         type: SEARCH_API,
@@ -72,7 +72,7 @@ export function searchApi(e){
   const CREATE_ITEM_API = 'CREATE_ITEM_API'
 
   export function addApi(newItem) {
-      const createItem = axios.post('http://localhost:3535/create/item/api', newItem)
+      const createItem = axios.post('/create/item/api', newItem)
       return {
           type: CREATE_ITEM_API,
           payload: createItem

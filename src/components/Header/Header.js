@@ -8,7 +8,7 @@ export default class Header extends Component {
       <div>
         <div className='main-header' >
           <img className='img-header' src='http://www.clker.com/cliparts/P/e/Z/Q/a/m/white-letter-h-md.png' alt=""/>
-          <a href="http://localhost:3000/#/login"><button className='logout-button' >LOGOUT</button></a>
+          <a href="/#/login"><button className='logout-button' >LOGOUT</button></a>
         </div>
       <Switch>
             <div className='navbar'>

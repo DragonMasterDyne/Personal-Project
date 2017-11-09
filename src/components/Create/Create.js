@@ -27,7 +27,7 @@ export default class Create extends Component {
 
   handleClick(state){
     console.log(this.state)
-    axios.post('http://localhost:3535/create/item', this.state)
+    axios.post('/create/item', this.state)
     this.setState({
       open: true
     })

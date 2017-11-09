@@ -60,8 +60,8 @@ passport.deserializeUser(function(email, done){
 
 app.get('/auth', passport.authenticate('auth0'));
 app.get('/auth/callback', passport.authenticate('auth0', {
-    successRedirect: 'http://localhost:3000/#/dashboard',
-    failureRedirect: 'http://localhost:3000/#/login?access=unauthorized'
+    successRedirect: '/#/dashboard',
+    failureRedirect: '/#/login?access=unauthorized'
 }))
 
 // Search Endpoint

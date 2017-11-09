@@ -21,7 +21,7 @@ constructor(){
     console.log('this is e', email)
     const answer = window.confirm('Are you sure you want to remove this user?')
     if(answer){
-      axios.delete(`http://localhost:3535/delete/user/${email}`)
+      axios.delete(`/delete/user/${email}`)
       .then( () => this.refresh())
     } else {
       return null
