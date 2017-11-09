@@ -75,10 +75,16 @@ app.get('/search/:item_name', (req,res) => {
 app.get('/search/api/:item_name', (req,res) => {
     const db = res.app.get('db');
     const {params} = req;
-    axios.get(`http://api.walmartlabs.com/v1/search?query=${params.item_name}&format=json&apiKey=a65y3j4vbdxjzswbscxaggeb`)
-    .then(item => {
-        res.status(200).send(item.data);
-    })
+    let apiSearch = axios.get(`http://api.walmartlabs.com/v1/search?query=${params.item_name}&format=json&apiKey=a65y3j4vbdxjzswbscxaggeb`);
+    apiSearch.then(item => {
+            item.data.items.forEach((e) => {
+            e.cost = 0
+            e.quantity = 0
+            e.vendor = ''
+        })
+        res.status(200).send(item.data)
+    });
+    
 })
 
 app.get('/users', (req, res) => {
@@ -108,7 +114,7 @@ app.post('/create/item/api', (req,res) => {
     const db = res.app.get('db');
     const {itemName, upc, cost, retail, quantity, vendor} = req.body
     db.create_item([itemName, upc, cost, retail, quantity, vendor])
-    .then( () => res.status(200).send())
+    .then( (ID) => res.status(200).send(ID))
 })
 
 // Update Endpoints

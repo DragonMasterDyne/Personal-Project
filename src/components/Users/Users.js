@@ -22,9 +22,15 @@ constructor(){
     const answer = window.confirm('Are you sure you want to remove this user?')
     if(answer){
       axios.delete(`http://localhost:3535/delete/user/${email}`)
+      .then( () => this.refresh())
     } else {
       return null
     }
+  }
+
+
+  refresh() {
+    this.props.getUsers()
   }
 
   render() {

@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import Header from '../Header/Header'
 import axios from 'axios'
+import Snackbar from 'material-ui/Snackbar';
 
 export default class Create extends Component {
   constructor(){
@@ -12,7 +13,8 @@ export default class Create extends Component {
       cost: 0,
       retail: 0,
       quantity: 0,
-      vendor: ''
+      vendor: '',
+      open: false
   }
   this.handleName = this.handleName.bind(this)
   this.handleUpc = this.handleUpc.bind(this)
@@ -26,6 +28,9 @@ export default class Create extends Component {
   handleClick(state){
     console.log(this.state)
     axios.post('http://localhost:3535/create/item', this.state)
+    this.setState({
+      open: true
+    })
   }
   handleName(e) {
     this.setState({
@@ -88,6 +93,11 @@ export default class Create extends Component {
             <p className='text-six'>Vendor:</p>
             <input onChange={this.handleVendor} className='text-input-five' type="text"/>
             <button onClick={this.handleClick} className='create-button' >Create Item</button>
+            <Snackbar
+                open={this.state.open}
+                message="Item has been created"
+                autoHideDuration={4000}
+            />
           </div>
         </div>
         </div>

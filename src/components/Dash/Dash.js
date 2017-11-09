@@ -3,7 +3,8 @@ import Header from '../Header/Header'
 import axios from 'axios'
 import {Link} from 'react-router-dom'
 import {connect} from 'react-redux'
-import { searchItem, searchApi } from '../../ducks/reducer'
+import { searchItem, searchApi, reset } from '../../ducks/reducer'
+import Snackbar from 'material-ui/Snackbar';
 
 
  class Dash extends Component {
@@ -11,7 +12,6 @@ import { searchItem, searchApi } from '../../ducks/reducer'
     super(props);
 
     this.handleKeyPress = this.handleKeyPress.bind(this)
-    this.handleKeyPressApi = this.handleKeyPressApi.bind(this)
     this.handleClickRemove = this.handleClickRemove.bind(this)
   }
 
@@ -31,16 +31,14 @@ import { searchItem, searchApi } from '../../ducks/reducer'
     }
   }
   
-  handleKeyPressApi(e){
-    if (e.key === 'Enter') {
-      this.props.searchApi(e)
-    }
+  componentDidMount() {
+    reset()
   }
   
   
 
   render() {
-    
+    console.log(this.props)
 
     return (
       <div>
@@ -60,21 +58,21 @@ import { searchItem, searchApi } from '../../ducks/reducer'
               <option value="Dairy">Dairy</option>
               <option value="Frozen">Frozen</option>
             </select>   */}
-            { this.props.itemName === '' ? (<div></div>) :(
+            { this.props.ID === 0 ? (<div></div>) :(
            <div className='create-box'>
           <div className='create-inputs'>
             <p className='text-one'>Name:</p>
-            <input  value={this.props.itemName} className='text-input' type="text"/>
+            <input  value={this.props.itemName} disabled='true' className='text-input' type="text"/>
             <p className='text-two'>UPC:</p>
-            <input value={this.props.upc} className='text-input-one' type="text"/>
+            <input value={this.props.upc} disabled='true' className='text-input-one' type="text"/>
             <p className='text-three'>Cost:</p>
-            <input  value={this.props.cost} className='text-input-two' type="text"/>
+            <input  value={this.props.cost} disabled='true' className='text-input-two' type="text"/>
             <p className='text-four'>Retail:</p>
-            <input value={this.props.retail} className='text-input-three' type="text"/>
+            <input value={this.props.retail} disabled='true' className='text-input-three' type="text"/>
             <p className='text-five'>Quantity:</p>
-            <input value={this.props.quantity} className='text-input-four' type="text"/>
+            <input value={this.props.quantity} disabled='true' className='text-input-four' type="text"/>
             <p className='text-six'>Vendor:</p>
-            <input value={this.props.vendor} className='text-input-five' type="text"/>
+            <input value={this.props.vendor} disabled='true' className='text-input-five' type="text"/>
 
               <Link to={`/update/${this.props.ID}`}  >
                 <button className='create-button'>Update Item</button>
@@ -84,6 +82,11 @@ import { searchItem, searchApi } from '../../ducks/reducer'
           </div>
             )}
         </div>
+        <Snackbar
+                open={this.props.api}
+                message="Item has been added!"
+                autoHideDuration={4000}
+            />
       </div>
     )
   }
@@ -93,13 +96,14 @@ function mapStateToProps(state) {
   return{
     ID: state.ID,
     itemName: state.itemName,
-    upc: state.product_code,
+    upc: state.upc,
     cost: state.cost,
     retail: state.retail,
     quantity: state.quantity,
-    vendor: state.vendor
+    vendor: state.vendor,
+    api: state.api
   }
 }
 
 
-export default connect(mapStateToProps, { searchItem, searchApi })(Dash)
+export default connect(mapStateToProps, { searchItem, searchApi, reset })(Dash)

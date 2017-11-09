@@ -111,8 +111,8 @@ export default class Update extends Component {
             <input onChange={this.handleQuantity} className='text-input-four' type="text" value={this.state.quantity}/>
             <p className='text-six'>Vendor:</p>
             <input onChange={this.handleVendor} className='text-input-five' type="text" value={this.state.vendor}/>
-            <Link to='/dashboard' >
-              <button onClick={this.handleClick} className='create-button' >Update Item</button>
+            <Link to='/dashboard' className='link-button' >
+              <button onClick={this.handleClick} className='update-button' >Update Item</button>
             </Link>
           </div>
         </div>

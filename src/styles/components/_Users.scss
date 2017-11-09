@@ -23,7 +23,7 @@
     float: left;
     height: 400px;
     width: 400px;
-    margin-right: 30px;
+    margin-right: 100px;
     margin-top: 15px;
 
     .current-users2 {
@@ -77,8 +77,8 @@
 .add-users {
     float: right;
     height: 400px;
-    width: 350px;
-    margin-left: 30px;
+    width: 400px;
+    margin-left: 100px;
     margin-top: 15px; 
     @include flex;
     flex-direction: column;

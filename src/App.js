@@ -6,24 +6,27 @@ import Users from './components/Users/Users'
 import Create from './components/Create/Create'
 import Update from './components/Update/Update'
 import Api from './components/Api/Api'
+import {MuiThemeProvider} from 'material-ui'
 import './styles/main.scss'
 
 
 class App extends Component {
   render() {
     return (
-      <HashRouter>
-        <div>
-          <div>
-              <Route path='/login' component={Login} />
-              <Route path='/dashboard' component={Dash} />
-              <Route path='/users' component={Users} />
-              <Route path='/create' component={Create} />
-              <Route path='/update/:ID' component={Update} />
-              <Route path='/api' component={Api} />
-          </div>
-        </div>
-      </HashRouter>
+      <MuiThemeProvider>
+          <HashRouter>
+            <div>
+              <div>
+                  <Route path='/login' component={Login} />
+                  <Route path='/dashboard' component={Dash} />
+                  <Route path='/users' component={Users} />
+                  <Route path='/create' component={Create} />
+                  <Route path='/update/:ID' component={Update} />
+                  <Route path='/api' component={Api} />
+              </div>
+            </div>
+          </HashRouter>
+      </MuiThemeProvider>
     );
   }
 }
