@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {HashRouter, Route} from 'react-router-dom'
+import {HashRouter, Route, BrowserRouter} from 'react-router-dom'
 import Login from './components/Login/Login'
 import Dash from './components/Dash/Dash'
 import Users from './components/Users/Users'
@@ -14,7 +14,8 @@ class App extends Component {
   render() {
     return (
       <MuiThemeProvider>
-          <HashRouter>
+          <BrowserRouter>
+
             <div>
               <div>
                   <Route path='/login' component={Login} />
@@ -25,7 +26,8 @@ class App extends Component {
                   <Route path='/api' component={Api} />
               </div>
             </div>
-          </HashRouter>
+
+          </BrowserRouter>
       </MuiThemeProvider>
     );
   }

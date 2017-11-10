@@ -32,7 +32,7 @@ import Snackbar from 'material-ui/Snackbar';
   }
   
   componentDidMount() {
-    reset()
+    this.props.reset()
   }
   
   
@@ -84,7 +84,12 @@ import Snackbar from 'material-ui/Snackbar';
         </div>
         <Snackbar
                 open={this.props.api}
-                message="Item has been added!"
+                message="Item has been Added!"
+                autoHideDuration={4000}
+            />
+        <Snackbar
+                open={this.props.itemUpdated}
+                message="Item has been Updated!"
                 autoHideDuration={4000}
             />
       </div>
@@ -101,7 +106,9 @@ function mapStateToProps(state) {
     retail: state.retail,
     quantity: state.quantity,
     vendor: state.vendor,
-    api: state.api
+    api: state.api,
+    itemCreated: state.itemCreated,
+    itemUpdated: state.itemUpdated
   }
 }
 

@@ -14,7 +14,9 @@ const initialState = {
     userEmail: '',
     apiResults: [],
     api: false,
-    apiSearch: false
+    apiSearch: false,
+    itemCreated: false,
+    itemUpdated: false
 }
 
 // Ceate Users
@@ -22,7 +24,7 @@ const initialState = {
 const CREATE_USER = 'CREATE_USER'
 
 export function handleClickCreateUser(user){
-    console.log(user)
+    // console.log(user)
    const createNewUser = axios.post('/create/user', user)
     return {
         type: CREATE_USER,
@@ -76,6 +78,18 @@ export function searchApi(e){
       return {
           type: CREATE_ITEM_API,
           payload: createItem
+      }
+  }
+
+  // Update Item
+
+  const UPDATE_ITEM = 'UPDATE_ITEM'
+
+  export function updateItem(item){
+    const updateItem = axios.put('/update/item', item)
+      return {
+          type: UPDATE_ITEM,
+          payload: updateItem
       }
   }
 
@@ -133,17 +147,29 @@ export function searchApi(e){
       }
   }
 
-  // Resets Snackbar Switches 
+  // Resets/Set Snackbar Switches 
 
   const RESET = 'RESET'
 
   export function reset() {
       const off = false
+      const zero = 0
       return {
-       type:RESET,
-       payload: off
+       type: RESET,
+       payload1: off,
+       payload2: zero
       }
   }
+
+//   const SET = 'SET'
+
+//   export function set() {
+//       const on = true;
+//       return {
+//           type: SET,
+//           payload: on
+//       }
+//   }
 
 
 
@@ -164,6 +190,9 @@ export default function reducer(state=initialState, action) {
         case CREATE_ITEM_API + '_FULFILLED':
             let api = action.payload.config.data
                 return Object.assign({}, state, {itemName: api.itemName, upc: api.upc, cost: api.cost, retail: api.retail, quantity: api.quantity, vendor: api.vendor, api: true})
+        case UPDATE_ITEM + '_FULFILLED':
+            let update = action.payload
+                return Object.assign({}, state, {itemName: update.itemName, upc: update.upc, cost: update.cost, retail: update.retail, quantity: update.quantity, vendor: update.vendor, itemUpdated: true})
         case HANDLE_CHANGE_NAME:
             let copyName = state.apiResults.slice()
                 copyName[action.payload.index].name = action.payload.value
@@ -189,8 +218,12 @@ export default function reducer(state=initialState, action) {
                 copyVendor[action.payload.index].vendor = action.payload.value
                     return Object.assign({}, state, {apiResults: copyVendor})
         case RESET:
-            let set = action.payload
-                return Object.assign({}, state, {api: set})
+            let setOff = action.payload1
+            let zero = action.payload2
+                return Object.assign({}, state, {api: setOff, itemUpdated: setOff, ID: zero})
+        // case SET:
+        //     let setOn = action.payload
+        //         return Object.assign({}, state, {itemUpdated: setOn})
         default: 
             return state
     }

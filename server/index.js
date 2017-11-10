@@ -154,5 +154,10 @@ app.delete('/delete/user/:email', (req, res) => {
     .then( () => res.status(200).send())
 })
 
+const path = require('path')
+app.get('*', (req, res)=>{
+  res.sendFile(path.join(__dirname, '../build/index.html'));
+})
+
 const PORT = 3535;
 app.listen(PORT, () => console.log(`Listing on port: ${PORT}`));

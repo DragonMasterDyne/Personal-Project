@@ -2,8 +2,11 @@ import React, { Component } from 'react'
 import Header from '../Header/Header'
 import axios from 'axios'
 import {Link} from 'react-router-dom'
+import { reset, updateItem } from '../../ducks/reducer'
+import {connect} from 'react-redux'
 
-export default class Update extends Component {
+
+class Update extends Component {
   constructor(){
     super();
 
@@ -28,8 +31,8 @@ export default class Update extends Component {
   
 
   componentDidMount() {
-    console.log(this.props)
-    axios.get(`http://localhost:3535/update/${this.props.match.params.ID}`)
+    // console.log(this.props)
+    axios.get(`/update/${this.props.match.params.ID}`)
     .then((res) => {
       this.setState({
         ID: res.data[0].ID,
@@ -40,13 +43,15 @@ export default class Update extends Component {
         quantity: res.data[0].quantity,
         vendor: res.data[0].vendor
       })
-      console.log(this.state)
+      // console.log(this.state)
     })
   }
 
   handleClick(state){
-    console.log(this.state)
-    axios.put('http://localhost:3535/update/item', this.state)
+    // console.log(this.state)
+    // this.props.set()
+    // axios.put('/update/item', this.state)
+    this.props.updateItem(this.state)
   }
   handleName(e) {
     this.setState({
@@ -89,7 +94,7 @@ export default class Update extends Component {
   render() {
 
     
-    console.log(this.state.ID)
+    // console.log(this.state.ID)
 
     return (
       
@@ -121,3 +126,13 @@ export default class Update extends Component {
     )
   }
 }
+
+
+function mapStateToProps(state) {
+  return{
+    itemUpdated: state.itemUpdated
+  }
+}
+
+
+export default connect(mapStateToProps, { reset, updateItem })(Update)
