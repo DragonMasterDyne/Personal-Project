@@ -30,6 +30,8 @@ massive(process.env.CONNECTION_STRING).then( db =>{
 
 // Auth0 
 
+// Check on nodeMailer
+
 passport.use(new Auth0Strategy({
     domain: process.env.AUTH_DOMAIN,
     clientID: process.env.AUTH_CLIENTID,
@@ -58,10 +60,10 @@ passport.deserializeUser(function(email, done){
 
 // Login Endpoints
 
-app.get('/auth', passport.authenticate('auth0'));
+app.get('/auth/login', passport.authenticate('auth0'));
 app.get('/auth/callback', passport.authenticate('auth0', {
-    successRedirect: '/#/dashboard',
-    failureRedirect: '/#/login?access=unauthorized'
+    successRedirect: '/dashboard',
+    failureRedirect: '/login?access=unauthorized'
 }))
 
 // Search Endpoint
@@ -90,10 +92,18 @@ app.get('/search/api/:item_name', (req,res) => {
     
 })
 
-app.get('/users', (req, res) => {
+app.get('/api/users', (req, res) => {
     const db = app.get('db');
     db.get_users().then(users => {
         res.status(200).send(users);
+    })
+})
+
+app.get('/search/item/cat/:cat_type', (req,res) => {
+    const db = app.get('db');
+    const {cat_type} = req.params
+    db.search_cat([cat_type]).then(item => {
+        res.status(200).send(item)
     })
 })
 
@@ -103,29 +113,31 @@ app.post('/create/item', (req,res) => {
     const db = res.app.get('db');
     const {itemName, upc, cost, retail, quantity, vendor} = req.body;
     db.create_item([itemName, upc, cost, retail, quantity, vendor])
-    .then( () => res.status(200).send());
+    .then( (id) => res.status(200).send());
 });
 
 app.post('/create/user', (req,res) => {
     const db = res.app.get('db');
     const {name, email} = req.body
     db.create_user([name, email])
-    .then( () => res.status(200).send()) 
+    .then( () => { 
+        db.get_users().then( (users) => res.status(200).send(users))
+    }) 
 })
 
 app.post('/create/item/api', (req,res) => {
     const db = res.app.get('db');
     const {itemName, upc, cost, retail, quantity, vendor} = req.body
     db.create_item([itemName, upc, cost, retail, quantity, vendor])
-    .then( (ID) => res.status(200).send(ID))
+    .then( (id) => res.status(200).send(id))
 })
 
 // Update Endpoints
 
-app.get('/update/:ID', (req,res) => {
+app.get('/update/:id', (req,res) => {
     const db = res.app.get('db');
     const {params} = req;
-    const item = `${params.ID}`;
+    const item = `${params.id}`;
     db.search_update([item]).then(item => {
         res.status(200).send(item);
     });
@@ -133,17 +145,17 @@ app.get('/update/:ID', (req,res) => {
 
 app.put('/update/item', (req, res) => {
     const db = res.app.get('db');
-    const {ID, itemName, upc, cost, retail, quantity, vendor} = req.body;
-    db.update_item([ID, itemName, upc, cost, retail, quantity, vendor])
+    const {id, itemName, upc, cost, retail, quantity, vendor} = req.body;
+    db.update_item([id, itemName, upc, cost, retail, quantity, vendor])
     .then( () => res.status(200).send() )
 })
 
 // Delete Endpoints
 
-app.delete('/delete/item/:ID', (req, res) => {
+app.delete('/delete/item/:id', (req, res) => {
     const db = res.app.get('db');
     const {params} = req;
-    db.delete_item([params.ID])
+    db.delete_item([params.id])
     .then( () => res.status(200).send())
 })
 

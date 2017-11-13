@@ -1,3 +1,3 @@
 select *
 from items
-where "ID" = $1
+where "id" = $1

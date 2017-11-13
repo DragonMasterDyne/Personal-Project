@@ -11,7 +11,7 @@ class Update extends Component {
     super();
 
     this.state = {
-      ID: 0,
+      id: 0,
       itemName: '',
       upc: 0,
       cost: 0,
@@ -35,7 +35,7 @@ class Update extends Component {
     axios.get(`/update/${this.props.match.params.ID}`)
     .then((res) => {
       this.setState({
-        ID: res.data[0].ID,
+        id: res.data[0].id,
         itemName: res.data[0].item_name,
         upc: res.data[0].product_code,
         cost: res.data[0].cost,

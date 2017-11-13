@@ -13,10 +13,16 @@ const initialState = {
     userName: '',
     userEmail: '',
     apiResults: [],
+    itemSearch: [],    
     api: false,
     apiSearch: false,
     itemCreated: false,
-    itemUpdated: false
+    itemUpdated: false,
+    checkedGrocery: false,
+    checkedDairy: false,
+    checkedFrozen: false,
+    checkedHoliday: false,
+    search: false
 }
 
 // Ceate Users
@@ -26,6 +32,7 @@ const CREATE_USER = 'CREATE_USER'
 export function handleClickCreateUser(user){
     // console.log(user)
    const createNewUser = axios.post('/create/user', user)
+   .then(res => res.data)
     return {
         type: CREATE_USER,
         payload: createNewUser
@@ -37,7 +44,7 @@ export function handleClickCreateUser(user){
 const GET_USERS = 'GET_USERS'
 
 export function getUsers() {
-    const allUsers = axios.get('/users')
+    const allUsers = axios.get('/api/users')
     .then((res) => res.data)
     return {
         type: GET_USERS,
@@ -51,8 +58,7 @@ export function getUsers() {
 const SEARCH_ITEM = 'SEARCH_ITEM'
 
 export function searchItem(e){
-     const item = axios.get(`/search/${e.target.value}`)
-      .then((res) =>  res.data[0])
+     const item = axios.get(`/search/${e.target.value}`).then((res) =>  res.data)
     return {
         type: SEARCH_ITEM,
         payload: item
@@ -161,6 +167,24 @@ export function searchApi(e){
       }
   }
 
+
+// Checkbox Switches
+
+const CHECKED_GROCERY = 'CHECKED_GROCERY'
+
+    export function updateCheckGrocery(check) {
+        let value = () => {
+            if (check === true ) {
+            return false 
+        } else if (check === false ) {
+            return true
+        }
+    }
+      return {
+        type: CHECKED_GROCERY,
+        payload: value
+        }
+    }
 //   const SET = 'SET'
 
 //   export function set() {
@@ -176,8 +200,10 @@ export function searchApi(e){
 export default function reducer(state=initialState, action) {
     switch(action.type) {
         case SEARCH_ITEM + '_FULFILLED':
-            let {ID, item_name, product_code, cost, retail, quantity, vendor} = action.payload
-                return Object.assign({}, state, {ID, itemName: item_name, upc: product_code, cost, retail, quantity, vendor})
+            // let {ID, item_name, product_code, cost, retail, quantity, vendor} = action.payload
+            let searchResults = action.payload
+                // return Object.assign({}, state, {ID, itemName: item_name, upc: product_code, cost, retail, quantity, vendor})
+                return Object.assign({}, state, {itemSearch: searchResults, search: true})
         case SEARCH_API + '_FULFILLED':
             let apiResult = action.payload
                 return Object.assign({}, state, {apiResults: apiResult, apiSearch: true})
@@ -186,7 +212,7 @@ export default function reducer(state=initialState, action) {
                 return Object.assign({}, state, {users: user})
         case CREATE_USER + '_FULFILLED':
             let newUsers = action.payload
-                return Object.assign({}, state, {users: newUsers.data})
+                return Object.assign({}, state, {users: newUsers})
         case CREATE_ITEM_API + '_FULFILLED':
             let api = action.payload.config.data
                 return Object.assign({}, state, {itemName: api.itemName, upc: api.upc, cost: api.cost, retail: api.retail, quantity: api.quantity, vendor: api.vendor, api: true})
@@ -221,6 +247,9 @@ export default function reducer(state=initialState, action) {
             let setOff = action.payload1
             let zero = action.payload2
                 return Object.assign({}, state, {api: setOff, itemUpdated: setOff, ID: zero})
+        case CHECKED_GROCERY:
+            let checkG = action.payload
+                return Object.assign({}, state, {checkedGrocery: checkG})
         // case SET:
         //     let setOn = action.payload
         //         return Object.assign({}, state, {itemUpdated: setOn})

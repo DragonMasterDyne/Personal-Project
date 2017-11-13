@@ -50,7 +50,7 @@
     width: 90%;
     display: grid;
     grid-template-columns: 25% 25% 25% 25%;
-    grid-template-rows: 25% 25% 25% 25%;
+    grid-template-rows: 20% 20% 20% 20% 20%;
     font-size: 20px;
     grid-gap: 25px;
     margin-bottom: 40px;
@@ -113,7 +113,33 @@
     background: black;
     color: white;
     grid-column: 2;
+    grid-row: 5;
     font-size: 15px;
+}
+
+.check-box {
+    display: grid;
+    grid-template-columns: 25% 25% 25% 25%;
+    width: 100%;
+    grid-column: 1/5;
+    
+    .check1 {
+        grid-column: 1;
+    
+    }
+    .check2 {
+        grid-column: 2;
+        
+    }
+    .check3 {
+        grid-column: 3;
+        
+    }
+    .check4 {
+        grid-column: 4;
+        
+    }
+
 }
 
 .update-button {

@@ -5,4 +5,4 @@ set item_name = $2,
     retail = $5,
     quantity = $6,
     vendor = $7
-where "ID" = $1;
+where "id" = $1;

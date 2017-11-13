@@ -18,7 +18,7 @@ import Snackbar from 'material-ui/Snackbar';
   handleClickRemove(){
     const answer = window.confirm('Are you sure you want to remove this item?')
     if(answer){
-      axios.delete(`/delete/item/${this.props.ID}`)
+      axios.delete(`/delete/item/${this.props.id}`)
     } else {
       return null
     }
@@ -39,7 +39,7 @@ import Snackbar from 'material-ui/Snackbar';
 
   render() {
     console.log(this.props)
-
+    console.log(this.props.itemSearch)
     return (
       <div>
         <div>
@@ -58,28 +58,31 @@ import Snackbar from 'material-ui/Snackbar';
               <option value="Dairy">Dairy</option>
               <option value="Frozen">Frozen</option>
             </select>   */}
-            { this.props.ID === 0 ? (<div></div>) :(
-           <div className='create-box'>
+            { this.props.search !== true ? (<div className='fill'></div>) :(
+              this.props.itemSearch.map((item, i) => {
+                return (
+           <div className='create-box' key={i}>
           <div className='create-inputs'>
             <p className='text-one'>Name:</p>
-            <input  value={this.props.itemName} disabled='true' className='text-input' type="text"/>
+            <input  value={this.props.itemSearch[i].item_name} disabled='true' className='text-input' type="text"/>
             <p className='text-two'>UPC:</p>
-            <input value={this.props.upc} disabled='true' className='text-input-one' type="text"/>
+            <input value={this.props.itemSearch[i].product_code} disabled='true' className='text-input-one' type="text"/>
             <p className='text-three'>Cost:</p>
-            <input  value={this.props.cost} disabled='true' className='text-input-two' type="text"/>
+            <input  value={this.props.itemSearch[i].cost} disabled='true' className='text-input-two' type="text"/>
             <p className='text-four'>Retail:</p>
-            <input value={this.props.retail} disabled='true' className='text-input-three' type="text"/>
+            <input value={this.props.itemSearch[i].retail} disabled='true' className='text-input-three' type="text"/>
             <p className='text-five'>Quantity:</p>
-            <input value={this.props.quantity} disabled='true' className='text-input-four' type="text"/>
+            <input value={this.props.itemSearch[i].quantity} disabled='true' className='text-input-four' type="text"/>
             <p className='text-six'>Vendor:</p>
-            <input value={this.props.vendor} disabled='true' className='text-input-five' type="text"/>
+            <input value={this.props.itemSearch[i].vendor} disabled='true' className='text-input-five' type="text"/>
 
-              <Link to={`/update/${this.props.ID}`}  >
+              <Link to={`/update/${this.props.itemSearch[i].id}`}  >
                 <button className='create-button'>Update Item</button>
               </Link>
-                <button onClick={this.handleClickRemove} className='remove-button'>Delete Item</button>
+                <button onClick={this.handleClickRemove[i].id} className='remove-button'>Delete Item</button>
           </div>
           </div>
+                )})
             )}
         </div>
         <Snackbar
@@ -99,7 +102,7 @@ import Snackbar from 'material-ui/Snackbar';
 
 function mapStateToProps(state) {
   return{
-    ID: state.ID,
+    id: state.id,
     itemName: state.itemName,
     upc: state.upc,
     cost: state.cost,
@@ -108,7 +111,9 @@ function mapStateToProps(state) {
     vendor: state.vendor,
     api: state.api,
     itemCreated: state.itemCreated,
-    itemUpdated: state.itemUpdated
+    itemUpdated: state.itemUpdated,
+    itemSearch: state.itemSearch,
+    search: state.search
   }
 }
 
