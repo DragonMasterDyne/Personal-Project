@@ -3,7 +3,7 @@ import Header from '../Header/Header'
 import axios from 'axios'
 import {Link} from 'react-router-dom'
 import {connect} from 'react-redux'
-import { searchItem, searchApi, reset } from '../../ducks/reducer'
+import { searchItem, searchApi, reset, getUserInfo } from '../../ducks/reducer'
 import Snackbar from 'material-ui/Snackbar';
 
 
@@ -15,10 +15,10 @@ import Snackbar from 'material-ui/Snackbar';
     this.handleClickRemove = this.handleClickRemove.bind(this)
   }
 
-  handleClickRemove(){
+  handleClickRemove(id){
     const answer = window.confirm('Are you sure you want to remove this item?')
     if(answer){
-      axios.delete(`/delete/item/${this.props.id}`)
+      axios.delete(`/delete/item/${id.id}`)
     } else {
       return null
     }
@@ -32,7 +32,8 @@ import Snackbar from 'material-ui/Snackbar';
   }
   
   componentDidMount() {
-    this.props.reset()
+    this.props.reset();
+    this.props.getUserInfo();
   }
   
   
@@ -79,12 +80,13 @@ import Snackbar from 'material-ui/Snackbar';
               <Link to={`/update/${this.props.itemSearch[i].id}`}  >
                 <button className='create-button'>Update Item</button>
               </Link>
-                <button onClick={this.handleClickRemove[i].id} className='remove-button'>Delete Item</button>
+                <button onClick={() => this.handleClickRemove({id: this.props.itemSearch[i].id})} className='remove-button'>Delete Item</button>
           </div>
+          <div className='fill2'></div>
           </div>
                 )})
             )}
-        </div>
+        </div >
         <Snackbar
                 open={this.props.api}
                 message="Item has been Added!"
@@ -118,4 +120,4 @@ function mapStateToProps(state) {
 }
 
 
-export default connect(mapStateToProps, { searchItem, searchApi, reset })(Dash)
+export default connect(mapStateToProps, { searchItem, searchApi, reset, getUserInfo })(Dash)

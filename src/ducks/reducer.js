@@ -9,6 +9,7 @@ const initialState = {
     retail: 0,
     quantity: 0,
     vendor: '',
+    user: {},
     users: [],
     userName: '',
     userEmail: '',
@@ -49,6 +50,20 @@ export function getUsers() {
     return {
         type: GET_USERS,
         payload: allUsers
+    }
+}
+
+const GET_USER_INFO ='GET_USER_INFO'
+
+export function getUserInfo() {
+    const user = axios.get('/auth/me').then( res => {
+        if (user === {}) {
+            return 
+        }
+    } )
+    return {
+        type:GET_USER_INFO,
+        payload: user
     }
 }
 
@@ -210,6 +225,8 @@ export default function reducer(state=initialState, action) {
         case GET_USERS + '_FULFILLED':
             let user = action.payload
                 return Object.assign({}, state, {users: user})
+        case GET_USER_INFO + '_FULFILLED':
+                return Object.assign({}, state, {user: action.payload})
         case CREATE_USER + '_FULFILLED':
             let newUsers = action.payload
                 return Object.assign({}, state, {users: newUsers})
